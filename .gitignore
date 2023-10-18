@@ -1,0 +1,6 @@
+venv
+Datasets/*
+.ipynb_checkpoints
+Images
+Annotation
+Recortes
