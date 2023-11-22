@@ -5,7 +5,10 @@
         <img src="@/assets/logo.png" alt="Logo" class="mx-auto" />
         <!-- Asegúrate de reemplazar con la ruta correcta a tu logo -->
         <h1 class="text-2xl font-bold my-4">Identifica la raza de mascota.</h1>
-        <p class="mb-4">Sube una foto de tu perro y descubre su raza.</p>
+        <p class="mb-4">
+          Sube una foto de tu perro y descubre su raza.
+          Las imágenes subidas no serán almacenadas en el servidor, solo se procesarán y se eliminarán.
+        </p>
         <ImageUpload />
         <div v-if="image" class="my-4">
           <img :src="image" alt="Imagen del Perro" class="mx-auto" />
