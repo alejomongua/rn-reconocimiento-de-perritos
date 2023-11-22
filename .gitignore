@@ -4,3 +4,10 @@ Datasets/*
 Images
 Annotation
 Recortes
+
+# Models
+*.onnx
+
+# python cache
+__pycache__
+*.py[cod]
