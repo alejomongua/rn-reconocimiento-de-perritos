@@ -1,7 +1,7 @@
 <template>
     <div class="image-upload flex flex-col items-center justify-center p-4">
         <!-- Abra la cámara -->
-        <input type="file" accept="image/*" capture="environment" @change="onFileChange"
+        <input type="file" accept="image/*" @change="onFileChange"
             class="file-input mb-4 p-2 border border-gray-300 rounded-lg cursor-pointer" />
 
         <!-- Mostrar la imagen seleccionada -->
@@ -10,7 +10,7 @@
             <!-- Muestre el botón solo si no hay classificationResults -->
             <button @click="uploadImage" v-if="!classificationResult"
                 class="btn-classify bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8">
-                Clasificar Imagen
+                Encontrar la raza
             </button>
         </div>
 
