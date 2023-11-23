@@ -1,8 +1,13 @@
 <template>
     <div class="image-upload flex flex-col items-center justify-center p-4">
-        <!-- Abra la cámara -->
-        <input type="file" accept="image/*" @change="onFileChange"
-            class="file-input mb-4 p-2 border border-gray-300 rounded-lg cursor-pointer" />
+        <!-- Input oculto para seleccionar archivos -->
+        <input type="file" accept="image/*" @change="onFileChange" ref="fileInput" class="hidden" />
+
+        <!-- Botón para abrir el diálogo de selección de archivos -->
+        <button @click="triggerFileInput"
+            class="btn-upload bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Seleccionar una imagen
+        </button>
 
         <!-- Mostrar la imagen seleccionada -->
         <div v-if="imageUrl" class="mt-4">
@@ -48,6 +53,12 @@ export default defineComponent({
         const classificationResult = ref<ClassificationResult | null>(null);
         const showModal = ref(false); // Controla la visibilidad del modal
         const errorMessage = ref<string | null>(null); // Almacena el mensaje de error
+        const fileInput = ref<HTMLInputElement | null>(null);
+
+        function triggerFileInput() {
+            if (fileInput.value)
+                fileInput.value.click();
+        }
 
 
         function onFileChange(event: Event) {
@@ -80,6 +91,12 @@ export default defineComponent({
                         body: formData,
                     });
 
+                    // Si el código de error es 413 es porque la imagen tiene muy alta resolución
+                    if (response.status === 413) {
+                        errorMessage.value = 'La imagen es demasiado grande. Inténtalo de nuevo con una menor resolución.';
+                        return;
+                    }
+
                     // Asumiendo que la respuesta es un arreglo de arreglos con [string, number]
                     const data: [string, number][] = await response.json();
 
@@ -104,7 +121,16 @@ export default defineComponent({
             }
         }
 
-        return { onFileChange, uploadImage, imageUrl, classificationResult, showModal, errorMessage };
+        return {
+            onFileChange,
+            uploadImage,
+            imageUrl,
+            classificationResult,
+            showModal,
+            errorMessage,
+            fileInput,
+            triggerFileInput,
+        };
     },
 });
 </script>
